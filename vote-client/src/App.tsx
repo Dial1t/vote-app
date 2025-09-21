@@ -1,9 +1,13 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { api } from './api';
 import { cable } from './cable';
 import { Poll, Vote } from './types';
+import HomePage from './pages/HomePage'; // Додано імпорт HomePage
+import './App.css'; // Додано імпорт стилів
 
-function App() {
+// Перейменовано функцію, щоб уникнути конфлікту імен
+function PollApp() {
   const [poll, setPoll] = useState<Poll | null>(null);
 
   useEffect(() => {
@@ -52,6 +56,20 @@ function App() {
         ))}
       </div>
     </div>
+  );
+}
+
+// Нова функція App з роутингом
+function App() {
+  return (
+    <Router>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/poll/:id" element={<PollApp />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
